@@ -2,7 +2,7 @@
 $installed = $app.Version
 echo "Installed Version: $installed"
 $arrInstalled = $app.Version.Split('.')
-$Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/nf3/vagrant-cent-salt/master/current_backup.txt"
+$Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Version_Number.txt"
 $latest = $Response.Content
 echo "Latest Version: $latest"
 $arrLatest = $Response.Content.Split('.')
