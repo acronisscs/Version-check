@@ -7,7 +7,7 @@ If the version is current the mesage will ouput "Installed version is the lastes
 ## Version is outdated
 If version is outdated, message will output "Update Available" 
 
-## Version verificaiton
+## Version verification
 ### Windows
 1. Navigate to the folder where "Version-check" was downloaded
 2. Locate the file Update.ps1
