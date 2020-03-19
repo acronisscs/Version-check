@@ -1,4 +1,4 @@
-$app = Get-WmiObject -Class Win32_Product -ComputerName . | Where-Object Name -like "Acronis Backup*"
+$app = Get-WmiObject -Class Win32_Product -ComputerName . | Where-Object Name -like "Acronis*"
 $installed = $app.Version
 echo "Installed Version: $installed"
 $arrInstalled = $app.Version.Split('.')
