@@ -22,15 +22,15 @@ if [ -z "$current_version_remote" ]; then
 fi
 
 if [ "${verInstalled[0]}" != "${verLatest[0]}" ]; then
-    echo "Update Available"
+    echo "Update Available for version ${verInstalled[0]}.${verInstalled[1]}.${verInstalled[2]}"
 elif [ "${verInstalled[0]}" != "${verLatest[0]}" ] || [ "${verInstalled[1]}" != "${verLatest[1]}" ]; then
-    echo "Update Available"
+    echo "Update Available for ${verInstalled[0]}.${verInstalled[1]}.${verInstalled[2]}"
 elif [ "${verInstalled[0]}" != "${verLatest[0]}" ] || [ "${verInstalled[1]}" != "${verLatest[1]}" ] || [ "${verInstalled[2]}" != "${verLatest[2]}" ]; then
     if [ "${verInstalled[0]}" -gt "${verLatest[0]}" ] || [ "${verInstalled[1]}" -gt "${verLatest[1]}" ] || [ "${verInstalled[2]}" -gt "${verLatest[2]}" ]; then
-        echo "Local version is more up to date than the remote version, no update needed."
+        echo "Local version ${verInstalled[0]}.${verInstalled[1]}.${verInstalled[2]} is more up to date than the remote version ${verLatest[0]}.${verLatest[1]}.${verLatest[2]}, no update needed."
     else
-        echo "Update Available"
+        echo "Update Available for ${verInstalled[0]}.${verInstalled[1]}.${verInstalled[2]}"
     fi
 else
-    echo "Installed version is the lastest, no update available"
+    echo "Installed version is the lastest ${verLatest[0]}.${verLatest[1]}.${verLatest[2]}, no update available"
 fi
