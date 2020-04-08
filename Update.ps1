@@ -8,7 +8,7 @@ $Response = Invoke-WebRequest -Uri "https://github.com/acronisscs/Version-check/
 $latest = $Response.Content
 $arrLatest = $Response.Content.Split('.')
 } catch {
-[string]$latest = "12.5.15960";
+[string]$latest = "12.5.16050";
 }
 echo "Latest Version: $latest"
 [array]$stringLatest = $latest.Split('.')
