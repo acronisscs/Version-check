@@ -7,7 +7,7 @@ try {
 $Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
 $latest = $Response.Content
 } catch {
-[string]$latest = "12.5.16540";
+[string]$latest = "12.5.16702";
 }
 echo "Latest Version: $latest"
 [array]$stringLatest = $latest.Split('.')
