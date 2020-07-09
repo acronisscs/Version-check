@@ -7,7 +7,7 @@ try {
 $Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
 $latest = $Response.Content
 } catch {
-[string]$latest = "12.5.16717";
+[string]$latest = "12.5.16720";
 }
 echo "Latest Version: $latest"
 [array]$stringLatest = $latest.Split('.')
@@ -28,8 +28,8 @@ else { echo "Installed version is the lastest, no update available" }
 # SIG # Begin signature block
 # MIIPbgYJKoZIhvcNAQcCoIIPXzCCD1sCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCVwV0q9ulcML3v
-# /qU/e8c6itwVKace3vXbjvAfRqWA4aCCDJEwggXNMIIEtaADAgECAhACc7udGvtM
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCA/aJaqI9nGQwPq
+# Nu9ZUMbnD4fIac9eu8gRbTjf5rbYOqCCDJEwggXNMIIEtaADAgECAhACc7udGvtM
 # 44Z36yExV8N/MA0GCSqGSIb3DQEBCwUAMGwxCzAJBgNVBAYTAlVTMRUwEwYDVQQK
 # EwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xKzApBgNV
 # BAMTIkRpZ2lDZXJ0IEVWIENvZGUgU2lnbmluZyBDQSAoU0hBMikwHhcNMjAwMzA0
@@ -101,12 +101,12 @@ else { echo "Installed version is the lastest, no update available" }
 # Z2ljZXJ0LmNvbTErMCkGA1UEAxMiRGlnaUNlcnQgRVYgQ29kZSBTaWduaW5nIENB
 # IChTSEEyKQIQAnO7nRr7TOOGd+shMVfDfzANBglghkgBZQMEAgEFAKCBhDAYBgor
 # BgEEAYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEE
-# MBwGCisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCAZ
-# xOdh8r0GChegVFHzcEET1BXY6avLZNzgtF7dxkIC+TANBgkqhkiG9w0BAQEFAASC
-# AQBsz1wX/9G1EIuDe2aBpy8xix/J1wtySng5X6LadB3dKaIUN6tGPVwC8sDlgt87
-# J60CuX8GtEbfdzVSl3mxEgmWFQWsMtuEMszrGoAbyvmeD4fjfUbPvfwJwAHiNHan
-# /VXhQWx1G2pa9POoqWRtpvRXynNfDyAI9OTTMvSf5SNR9rJi+TXc01b4Vw5q4NTM
-# t8euUsVT4Ytl7+YJIo1xb2T9og8BGxEZ5oCqhzqJOYYB4QKbtF1BkawtiUD1eTTo
-# is9b4/SgmA5s/ektN3BZQeKklY7gdcjw/CPWizxxGtEPoIe+AzqEcm89BaKkmoYT
-# ZZCrVPlwh8jAwn3jfEIvNml4
+# MBwGCisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCAW
+# fbiL4wtHeS+u8xCGVDk709FLFxOvySYpm0YWHBQnvDANBgkqhkiG9w0BAQEFAASC
+# AQBfyyyd53oEq6hovefbRBnYPok9/NF6nP+aR6faHb+RdrGLYR05jHRue8pWcntv
+# arRIxs4opRYQWcC6jZGWh4KFD2eKUD0+rEc2lH/2xofjWO9Zs2qihcxLfk+YsKme
+# x4J80x6SZ/fQVm00q2GJhp7GAtaDKUfzjWgIAMyShcK5jHZi/5h1YxhfCoBYiBKz
+# UTz/c3wwIx5gFI+fUMqjBFgoR3BMPEWYS4UnAUWPNg0sQ4H5BBuTNXKy+6+LqsSH
+# LJKL9j2T5dEmd5rM/gbSQXH7E5TJTA23Igj3/JgLbhLFEO0tx7ibML6ZMN/Qj0DJ
+# YBZ6T0YFsNEzpIOSyh9zr+Ux
 # SIG # End signature block
