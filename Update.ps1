@@ -1,32 +1,32 @@
 # Usage: PowerShell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Update.ps1
-Write-Host ""
+Write-Output ""
 $installed = (Get-ItemProperty HKLM:\SOFTWARE\$_\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object -Property DisplayName -Like 'Acronis*'|Select-Object -First 1).DisplayVersion
 If (-Not $installed) {
-  Write-Host "Acronis SCS Cyber Protect is not installed"
+  Write-Output "Acronis SCS Cyber Protect is not installed"
 } else {
-  Write-Host "Installed Version: $installed"
+  Write-Output "Installed Version: $installed"
   $arrInstalled = $installed.Split('.') | % { [int]::Parse($_) }
 }
 
 try {
   $Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
   $latest = $Response.Content.Trim()
-  #Write-Host "Response.StatusCode=$($Response.StatusCode), Version=$latest"
+  #Write-Output "Response.StatusCode=$($Response.StatusCode), Version=$latest"
 } catch {
   $latest = "12.5.16738";
-  #Write-Host "Error: Request failed - [$($_.GetType())]: $($_.Exception.Message)"
+  #Write-Output "Error: Request failed - [$($_.GetType())]: $($_.Exception.Message)"
 }
-Write-Host "Latest Version: $latest"
+Write-Output "Latest Version: $latest"
 $arrLatest = $latest.Split('.') | % { [int]::Parse($_) }
 
 if ($installed) {
-  if ($arrLatest[0] -gt $arrInstalled[0]) { echo "Update Available" }
+  if ($arrLatest[0] -gt $arrInstalled[0]) { Write-Outout "Update Available" }
   elseif (($arrLatest[0] -eq $arrInstalled[0]) `
-    -And ($arrLatest[1] -gt $arrInstalled[1])) { echo "Update Available" }
+    -And ($arrLatest[1] -gt $arrInstalled[1])) { Write-Outout "Update Available" }
   elseif (($arrLatest[0] -eq $arrInstalled[0]) `
     -And ($arrLatest[1] -eq $arrInstalled[1])  `
-    -And ($arrLatest[2] -gt $arrInstalled[2])) { echo "Update Available" }
-  else { echo "Installed version is the lastest, no update available" }
+    -And ($arrLatest[2] -gt $arrInstalled[2])) { Write-Outout "Update Available" }
+  else { Write-Outout "Installed version is the lastest, no update available" }
 }
 # SIG # Begin signature block
 # MIIPSQYJKoZIhvcNAQcCoIIPOjCCDzYCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
