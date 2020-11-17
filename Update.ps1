@@ -1,6 +1,6 @@
 # Usage: PowerShell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Update.ps1
 Write-Output ""
-$installed = (Get-ItemProperty HKLM:\SOFTWARE\$_\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object -Property DisplayName -Like 'Acronis*'|Select-Object -First 1).DisplayVersion
+$installed = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object -Property DisplayName -Like 'Acronis*'|Select-Object -First 1).DisplayVersion
 If (-Not $installed) {
   Write-Output "Acronis SCS Cyber Protect is not installed"
 } else {
