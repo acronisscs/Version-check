@@ -5,7 +5,7 @@ local_agent_version=$(rpm -qa BackupAndRecoveryAgent)
 filtered_server_string=${local_server_version:35:-9}
 filtered_agent_string=${local_agent_version:23:-9}
 current_version_remote=$(timeout 2 wget -qO- https://raw.githubusercontent.com/acronisscs/Version-check/master/Linux_Version_Number)
-current_version_local="12.5.16753"
+current_version_local="12.5.16755"
 
 IFS='.'
 
