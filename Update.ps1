@@ -1,30 +1,32 @@
-$app = Get-WmiObject -Class Win32_Product -ComputerName . | Where-Object Name -like "Acronis*"
-$installed = $app.Version
-echo "Installed Version: $installed"
-$arrInstalled = $app.Version.Split('.')
+# Usage: PowerShell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Update.ps1
+Write-Output ""
+$installed = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object -Property DisplayName -Like 'Acronis*'|Select-Object -First 1).DisplayVersion
+If (-Not $installed) {
+  Write-Output "Acronis SCS Cyber Protect is not installed"
+} else {
+  Write-Output "Installed Version: $installed"
+  $arrInstalled = $installed.Split('.') | % { [int]::Parse($_) }
+}
 
 try {
-$Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
-$latest = $Response.Content
+  $Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
+  $latest = $Response.Content.Trim()
+  #Write-Output "Response.StatusCode=$($Response.StatusCode), Version=$latest"
 } catch {
 [string]$latest = "12.5.16789";
 }
-echo "Latest Version: $latest"
-[array]$stringLatest = $latest.Split('.')
-[array]$arrLatest = foreach($number in $stringLatest) {
-try {
-    [int]::parse($number)
-    
-}
-catch {
-   Invoke-Expression -Command $number;
-    }
-}
+Write-Output "Latest Version: $latest"
+$arrLatest = $latest.Split('.') | % { [int]::Parse($_) }
 
-if ([int]$arrLatest[0] -gt [int]$arrInstalled[0]) { echo "Update Available" }
-elseif (([int]$arrLatest[0] -eq [int]$arrInstalled[0]) -And ([int]$arrLatest[1] -gt [int]$arrInstalled[1])) { echo "Update Available" }
-elseif (([int]$arrLatest[0] -eq [int]$arrInstalled[0]) -And ([int]$arrLatest[1] -eq [int]$arrInstalled[1]) -And ([int]$arrLatest[2] -gt [int]$arrInstalled[2])) { echo "Update Available" }
-else { echo "Installed version is the lastest, no update available" }
+if ($installed) {
+  if ($arrLatest[0] -gt $arrInstalled[0]) { Write-Outout "Update Available" }
+  elseif (($arrLatest[0] -eq $arrInstalled[0]) `
+    -And ($arrLatest[1] -gt $arrInstalled[1])) { Write-Outout "Update Available" }
+  elseif (($arrLatest[0] -eq $arrInstalled[0]) `
+    -And ($arrLatest[1] -eq $arrInstalled[1])  `
+    -And ($arrLatest[2] -gt $arrInstalled[2])) { Write-Outout "Update Available" }
+  else { Write-Outout "Installed version is the lastest, no update available" }
+}
 # SIG # Begin signature block
 # MIIPSAYJKoZIhvcNAQcCoIIPOTCCDzUCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
