@@ -1,35 +1,37 @@
-$app = Get-WmiObject -Class Win32_Product -ComputerName . | Where-Object Name -like "Acronis*"
-$installed = $app.Version
-echo "Installed Version: $installed"
-$arrInstalled = $app.Version.Split('.')
+# Usage: PowerShell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Update.ps1
+Write-Output ""
+$installed = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object -Property DisplayName -Like 'Acronis*'|Select-Object -First 1).DisplayVersion
+If (-Not $installed) {
+  Write-Output "Acronis SCS Cyber Protect is not installed"
+} else {
+  Write-Output "Installed Version: $installed"
+  $arrInstalled = $installed.Split('.') | % { [int]::Parse($_) }
+}
 
 try {
-$Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
-$latest = $Response.Content
+  $Response = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acronisscs/Version-check/master/Windows_Version_Number"
+  $latest = $Response.Content.Trim()
+  #Write-Output "Response.StatusCode=$($Response.StatusCode), Version=$latest"
 } catch {
-[string]$latest = "12.5.16789";
+[string]$latest = "12.5.16843";
 }
-echo "Latest Version: $latest"
-[array]$stringLatest = $latest.Split('.')
-[array]$arrLatest = foreach($number in $stringLatest) {
-try {
-    [int]::parse($number)
-    
-}
-catch {
-   Invoke-Expression -Command $number;
-    }
-}
+Write-Output "Latest Version: $latest"
+$arrLatest = $latest.Split('.') | % { [int]::Parse($_) }
 
-if ([int]$arrLatest[0] -gt [int]$arrInstalled[0]) { echo "Update Available" }
-elseif (([int]$arrLatest[0] -eq [int]$arrInstalled[0]) -And ([int]$arrLatest[1] -gt [int]$arrInstalled[1])) { echo "Update Available" }
-elseif (([int]$arrLatest[0] -eq [int]$arrInstalled[0]) -And ([int]$arrLatest[1] -eq [int]$arrInstalled[1]) -And ([int]$arrLatest[2] -gt [int]$arrInstalled[2])) { echo "Update Available" }
-else { echo "Installed version is the lastest, no update available" }
+if ($installed) {
+  if ($arrLatest[0] -gt $arrInstalled[0]) { Write-Outout "Update Available" }
+  elseif (($arrLatest[0] -eq $arrInstalled[0]) `
+    -And ($arrLatest[1] -gt $arrInstalled[1])) { Write-Outout "Update Available" }
+  elseif (($arrLatest[0] -eq $arrInstalled[0]) `
+    -And ($arrLatest[1] -eq $arrInstalled[1])  `
+    -And ($arrLatest[2] -gt $arrInstalled[2])) { Write-Outout "Update Available" }
+  else { Write-Outout "Installed version is the lastest, no update available" }
+}
 # SIG # Begin signature block
 # MIIPSAYJKoZIhvcNAQcCoIIPOTCCDzUCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUfQvkCaM5zLtd1d5srYYGUFZq
-# hMagggyQMIIFzDCCBLSgAwIBAgIQCFfbIzAft+a2+qMwyieGDzANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUaKgUVsFNBZsycAFr+abqBsT0
+# RXagggyQMIIFzDCCBLSgAwIBAgIQCFfbIzAft+a2+qMwyieGDzANBgkqhkiG9w0B
 # AQsFADBsMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYD
 # VQQLExB3d3cuZGlnaWNlcnQuY29tMSswKQYDVQQDEyJEaWdpQ2VydCBFViBDb2Rl
 # IFNpZ25pbmcgQ0EgKFNIQTIpMB4XDTIxMDMyOTAwMDAwMFoXDTIyMDUwMzIzNTk1
@@ -101,11 +103,11 @@ else { echo "Installed version is the lastest, no update available" }
 # RGlnaUNlcnQgRVYgQ29kZSBTaWduaW5nIENBIChTSEEyKQIQCFfbIzAft+a2+qMw
 # yieGDzAJBgUrDgMCGgUAoHgwGAYKKwYBBAGCNwIBDDEKMAigAoAAoQKAADAZBgkq
 # hkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3AgELMQ4wDAYKKwYBBAGC
-# NwIBFTAjBgkqhkiG9w0BCQQxFgQUa8DGCCTbOUo8qWkpsda/mTY+UREwDQYJKoZI
-# hvcNAQEBBQAEggEAhDmlHHntNdCEdJ4r5xOoUGNhk+MTMoMly7lzliFUZHJS4pQU
-# rWoV2sfekMb2aiHyHLLd2b+8lPmIXt5W/YRL/b8Uy8tHUqSg5aeuU7wMpbeOSZA0
-# 4P58VeYG84+Ut3VboyPuTrYkJc/7m0PR1D3Nm2Q/ouyFclXaFgl/nMi1XZ5ur8wR
-# oWlEUVarBkp5tQXhAdMDmCSwTqKbA3z5qGCSwJ+EOCIlQ838RyXIalL2jesaJeIP
-# azZUfJH8sDLo019Qt6wqiWQWJs4ADdK67VxV6JLhjSs3Of5J9dIxYwUlFZuMw+WL
-# 1dQ7o3Rn1JXxdwxg/0N3ASOkEriI3g+aplOy0g==
+# NwIBFTAjBgkqhkiG9w0BCQQxFgQU3f4F6IIpJ7+XMZrT9um3yFWCqj0wDQYJKoZI
+# hvcNAQEBBQAEggEAOpI3E18IOf7hx1sWXYZUY07Q8Iz/Wq5MYE87Pq8rIMqtL8L8
+# 6SUmDA+NOMYAbFN0zD9xOcqb0wZs9eD7TlO2kc31v+4hGcahjXIuiRhnwbHK0Az3
+# MYrn5OgBMBfx6yL2xrHXPMojK8xy1seerTpNbu34mGw6tQsu5hJ9OfTCEivk4ApI
+# WMIOpI4c7x9Im+SNB8nSpd+JaRQ31cRKCwN/l56cIkqDsUBKNmD+41jsgtqRj6aP
+# vZVbTy4n2Zrh6gYlzKo9fc5rqC6odTGy5u7W9BC+Z/L//tYCSGoFsqQuWz0kvrge
+# F3weyTkpQAZbUvnYEmbWwAtNA03vqarcuFrQmA==
 # SIG # End signature block
