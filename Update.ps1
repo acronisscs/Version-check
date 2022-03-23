@@ -19,13 +19,13 @@ Write-Output "Latest Version: $latest"
 $arrLatest = $latest.Split('.') | % { [int]::Parse($_) }
 
 if ($installed) {
-  if ($arrLatest[0] -gt $arrInstalled[0]) { Write-Outout "Update Available" }
+  if ($arrLatest[0] -gt $arrInstalled[0]) { Write-Output "Update Available" }
   elseif (($arrLatest[0] -eq $arrInstalled[0]) `
-    -And ($arrLatest[1] -gt $arrInstalled[1])) { Write-Outout "Update Available" }
+    -And ($arrLatest[1] -gt $arrInstalled[1])) { Write-Output "Update Available" }
   elseif (($arrLatest[0] -eq $arrInstalled[0]) `
     -And ($arrLatest[1] -eq $arrInstalled[1])  `
-    -And ($arrLatest[2] -gt $arrInstalled[2])) { Write-Outout "Update Available" }
-  else { Write-Outout "Installed version is the lastest, no update available" }
+    -And ($arrLatest[2] -gt $arrInstalled[2])) { Write-Output "Update Available" }
+  else { Write-Output "Installed version is the lastest, no update available" }
 }
 # SIG # Begin signature block
 # MIIPSAYJKoZIhvcNAQcCoIIPOTCCDzUCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
