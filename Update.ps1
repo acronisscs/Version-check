@@ -13,7 +13,7 @@ try {
   $latest = $Response.Content.Trim()
   #Write-Output "Response.StatusCode=$($Response.StatusCode), Version=$latest"
 } catch {
-[string]$latest = "12.5.16866";
+[string]$latest = "12.5.16903";
 }
 Write-Output "Latest Version: $latest"
 $arrLatest = $latest.Split('.') | % { [int]::Parse($_) }
